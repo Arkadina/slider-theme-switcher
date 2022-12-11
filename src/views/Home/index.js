@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Outlet } from "react-router-dom";
 import styled from "styled-components";
 
 import Header from "../../components/Header";
 import SideBar from "../../components/Sidebar";
 import MainContent from "../../components/MainContent";
+
+import { ThemeContext } from "../../contexts/ThemeContext";
 
 const HomeContainer = styled.div`
     overflow: hidden;
@@ -21,26 +23,26 @@ const HomeContainer = styled.div`
 
 function Home() {
     const [columnHeight, setColumnHeight] = useState("200px");
+    const ThemeConsume = useContext(ThemeContext);
 
     return (
         <HomeContainer columnHeight={columnHeight}>
             <SideBar
                 columnHeight={columnHeight}
                 setColumnHeight={setColumnHeight}
+                theme={ThemeConsume.theme}
             />
-            <Header />
+            <Header
+                theme={ThemeConsume.theme}
+                defineTheme={ThemeConsume.defineTheme}
+            />
             <div className="scrollContainer">
                 <MainContent>
-                    r43543534543
                     <Outlet />
                 </MainContent>
             </div>
         </HomeContainer>
     );
 }
-
-// {ThemeConsume.defineTheme("dark")}
-// <p>{ThemeConsume.theme}</p>
-// const ThemeConsume = useContext(ThemeContext);
 
 export default Home;
